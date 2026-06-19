@@ -39,6 +39,8 @@ export interface FifoRow {
   source_label: string; // 'GRN' | '57F4' | 'Plant 1→2'
   reference_no: string | null;
   receipt_date: string;
+  coil_date: string | null;
+  lot_date: string;
   qty_received: number;
   qty_available: number;
   rack_number: string | null;

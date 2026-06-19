@@ -122,7 +122,7 @@ export default function FifoPage() {
       </div>
 
       <p className="mt-2 text-[10px] text-[var(--muted)]">
-        Oldest-first per RM (lower # = consume first). Flags: <b style={{ color: "#dc2626" }}>Oldest</b> = #1 for its RM · <b style={{ color: "#ea8a0c" }}>Critical</b> = 30+ days · <b style={{ color: "#15a34a" }}>Ready</b> = rack assigned. Qty available reduces once issues are recorded.
+        Aging & FIFO order use the coil-number date (last 6 digits = YYMMDD); “*” means no coil date, receipt date used. Oldest-first per RM (lower # = consume first). Flags: <b style={{ color: "#dc2626" }}>Oldest</b> = #1 for its RM · <b style={{ color: "#ea8a0c" }}>Critical</b> = 30+ days · <b style={{ color: "#15a34a" }}>Ready</b> = rack assigned. Qty available reduces once issues are recorded.
       </p>
     </Shell>
   );

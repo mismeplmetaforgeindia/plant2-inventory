@@ -17,7 +17,7 @@ export default function FifoTable({ rows }: { rows: FifoRow[] }) {
         <table className="w-full border-collapse text-xs">
           <thead className="sticky top-0 z-10">
             <tr style={{ background: "var(--header)" }}>
-              {["#", "RM Code", "Description", "Source", "Coil / Ref", "Receipt", "Aging", "Rack", "Recd", "Avail", "Flags"].map((h, i) => (
+              {["#", "RM Code", "Description", "Source", "Coil / Ref", "Lot Date", "Aging", "Rack", "Recd", "Avail", "Flags"].map((h, i) => (
                 <th key={h} className={`whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-white/90 ${i >= 8 ? "text-right" : "text-left"}`}>{h}</th>
               ))}
             </tr>
@@ -33,7 +33,7 @@ export default function FifoTable({ rows }: { rows: FifoRow[] }) {
                   <td className="max-w-[200px] truncate px-3 py-1.5 text-[var(--muted)]" title={r.item_description ?? ""}>{r.item_description ?? "—"}</td>
                   <td className="px-3 py-1.5"><SourceBadge label={r.source_label} /></td>
                   <td className="whitespace-nowrap px-3 py-1.5 font-mono text-[11px]">{r.reference_no ?? "—"}</td>
-                  <td className="whitespace-nowrap px-3 py-1.5 font-mono text-[11px]">{r.receipt_date}</td>
+                  <td className="whitespace-nowrap px-3 py-1.5 font-mono text-[11px]" title={`Coil date ${r.coil_date ?? "n/a"} · Receipt ${r.receipt_date}`}>{r.lot_date}{r.coil_date ? "" : " *"}</td>
                   <td className="whitespace-nowrap px-3 py-1.5"><span className="font-mono text-[11px] font-semibold" style={{ color: bm.color }}>{r.aging_days}d</span></td>
                   <td className="whitespace-nowrap px-3 py-1.5 font-mono text-[11px]">{r.rack_number ?? <span className="text-[var(--muted)]">—</span>}</td>
                   <td className="px-3 py-1.5 text-right font-mono tabular-nums text-[var(--muted)]">{fmt(r.qty_received)}</td>
