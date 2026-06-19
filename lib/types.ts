@@ -64,3 +64,55 @@ export function sourceMeta(label: string): { color: string; tint: string } {
   if (label.startsWith("Plant")) return { color: "#0d9488", tint: "rgba(13,148,136,0.12)" };
   return { color: "#2e5a8f", tint: "rgba(46,90,143,0.12)" }; // GRN
 }
+
+// ── GRN Entries ──────────────────────────────────────────────────────────────
+export interface EntryRow {
+  entry_id: string;
+  source_type: "grn_khatwad" | "plant1_to_plant2";
+  batch_id: string | null;
+  rm_code: string;
+  item_description: string | null;
+  entry_date: string;
+  weight_kg: number;
+  supplier: string | null;
+  machine_no: string | null;
+  grn_type: string | null;
+  coil_no: string | null;
+  rack_number: string | null;
+  status: string;
+  qty_available: number | null;
+  origin: string; // 'sheet' | 'manual'
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  updated_by: string;
+}
+
+export function entrySourceLabel(r: EntryRow): string {
+  return r.source_type === "plant1_to_plant2" ? "Plant 1→2" : (r.grn_type || "GRN");
+}
+
+// ── GRN Entries ──────────────────────────────────────────────────────────────
+export interface GrnRow {
+  kind: "grn" | "transfer";
+  id: string;
+  doc_date: string;
+  rm_code: string;
+  plant: string;
+  weight_kg: number;
+  supplier: string | null;
+  machine_no: string | null;
+  grn_type: string | null;
+  coil_no: string | null;
+  heat_no: string | null;
+  grade_size: string | null;
+  origin: "sheet" | "manual";
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  updated_by: string;
+  batch_id: string | null;
+  rack_number: string | null;
+  status: string | null;
+  qty_available: number | null;
+}

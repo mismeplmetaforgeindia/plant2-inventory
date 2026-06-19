@@ -4,7 +4,7 @@ import ThemeToggle from "./ThemeToggle";
 const NAV = [
   { label: "Dashboard", href: "/", live: true },
   { label: "FIFO Board", href: "/fifo", live: true },
-  { label: "GRN Entries", href: "/grn", live: false },
+  { label: "GRN Entries", href: "/grn", live: true },
 ];
 
 export default function Shell({
