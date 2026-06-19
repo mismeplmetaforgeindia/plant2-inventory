@@ -68,7 +68,7 @@ export default function DashboardPage() {
   const syncLabel = loading && !rows.length ? "Loading…" : `Synced ${timeAgo(lastSync)}`;
 
   return (
-    <Shell syncLabel={syncLabel} onRefresh={load} refreshing={loading}>
+    <Shell active="/" title="Raw Material Dashboard" syncLabel={syncLabel} onRefresh={load} refreshing={loading}>
       {error && (
         <div className="mb-3 rounded-lg border px-3 py-2 text-xs" style={{ borderColor: "#dc2626", background: "rgba(220,38,38,0.08)", color: "#dc2626" }}>
           Couldn’t load data: {error}. Check that RLS read policies are applied and the anon key is set.
