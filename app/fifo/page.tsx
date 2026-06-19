@@ -1,14 +1,14 @@
 "use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { FifoRow, BUCKETS, AgingBucket } from "@/lib/types";
+import { FifoRow } from "@/lib/types";
 import { fetchAllFifo } from "@/lib/fifo";
-import { fmt, fmtKg, timeAgo } from "@/lib/stock";
+import { fmt, fmtKg } from "@/lib/stock";
 import Shell from "@/components/Shell";
-import FifoBoard from "@/components/FifoBoard";
+import FifoPicker from "@/components/FifoPicker";
 import FifoTable from "@/components/FifoTable";
 
 const REFRESH_MS = 120_000;
-type View = "board" | "table";
+type View = "picker" | "table";
 
 function Kpi({ label, value, accent, sub }: { label: string; value: string; accent?: string; sub?: string }) {
   return (
@@ -24,11 +24,7 @@ export default function FifoPage() {
   const [rows, setRows] = useState<FifoRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const [view, setView] = useState<View>("table");
-  const [search, setSearch] = useState("");
-  const [source, setSource] = useState<string>("All");
-  const [bucket, setBucket] = useState<AgingBucket | "All">("All");
+  const [view, setView] = useState<View>("picker");
   const [availOnly, setAvailOnly] = useState(false);
 
   const load = useCallback(async () => {
@@ -44,18 +40,15 @@ export default function FifoPage() {
     return () => clearInterval(id);
   }, [load]);
 
-  const sources = useMemo(() => ["All", ...Array.from(new Set(rows.map((r) => r.source_label)))], [rows]);
-
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return rows.filter((r) => {
-      if (source !== "All" && r.source_label !== source) return false;
-      if (bucket !== "All" && r.aging_bucket !== bucket) return false;
-      if (availOnly && r.qty_available <= 0) return false;
-      if (q && !(r.rm_code.toLowerCase().includes(q) || (r.item_description ?? "").toLowerCase().includes(q) || (r.reference_no ?? "").toLowerCase().includes(q))) return false;
-      return true;
+  const assignRack = useCallback(async (id: string, rack: string) => {
+    const res = await fetch(`/api/batches/${id}/rack`, {
+      method: "PATCH", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rack_number: rack }),
     });
-  }, [rows, search, source, bucket, availOnly]);
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error ?? "save failed");
+    setRows((prev) => prev.map((r) => (r.id === id ? { ...r, rack_number: j.rack_number, status: j.status } : r)));
+  }, []);
 
   const kpi = useMemo(() => {
     const avail = rows.reduce((s, r) => s + (r.qty_available || 0), 0);
@@ -64,13 +57,13 @@ export default function FifoPage() {
     return { lots: rows.length, avail, critical, pendingRack };
   }, [rows]);
 
-  const syncLabel = loading && !rows.length ? "Loading…" : `${rows.length} lots · ${timeAgo(new Date().toISOString())}`;
+  const tableRows = useMemo(() => availOnly ? rows.filter((r) => r.qty_available > 0) : rows, [rows, availOnly]);
 
   return (
     <Shell active="/fifo" title="FIFO Board" syncLabel={loading ? "Loading…" : `${kpi.lots} lots`} onRefresh={load} refreshing={loading}>
       {error && (
         <div className="mb-3 rounded-lg border px-3 py-2 text-xs" style={{ borderColor: "#dc2626", background: "rgba(220,38,38,0.08)", color: "#dc2626" }}>
-          Couldn’t load FIFO data: {error}. Make sure <code>fifo_view.sql</code> has been run in Supabase.
+          Couldn’t load FIFO data: {error}. Make sure <code>fifo_view.sql</code> has been run.
         </div>
       )}
 
@@ -81,35 +74,13 @@ export default function FifoPage() {
         <Kpi label="Pending Rack" value={fmt(kpi.pendingRack)} accent={kpi.pendingRack ? "#ea8a0c" : undefined} sub="not yet assigned" />
       </div>
 
-      {/* Controls */}
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search RM code, description, coil…"
-          className="h-8 w-full max-w-xs rounded-md border bg-transparent px-3 text-xs outline-none focus:border-[var(--header)]"
-          style={{ borderColor: "var(--border)" }}
-        />
-        <select value={source} onChange={(e) => setSource(e.target.value)} className="h-8 rounded-md border bg-transparent px-2 text-xs outline-none" style={{ borderColor: "var(--border)" }}>
-          {sources.map((s) => <option key={s} value={s}>{s === "All" ? "All sources" : s}</option>)}
-        </select>
-        <div className="flex items-center gap-1">
-          {(["All", ...BUCKETS] as (AgingBucket | "All")[]).map((b) => (
-            <button key={b} onClick={() => setBucket(b)}
-              className="rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors"
-              style={bucket === b ? { background: "var(--header)", color: "#fff" } : { color: "var(--muted)", border: "1px solid var(--border)" }}>
-              {b === "All" ? "All ages" : b}
-            </button>
-          ))}
-        </div>
         <label className="flex items-center gap-1.5 text-[11px] text-[var(--muted)]">
           <input type="checkbox" checked={availOnly} onChange={(e) => setAvailOnly(e.target.checked)} /> Available only
         </label>
-
         <div className="ml-auto flex items-center gap-2 text-[11px] text-[var(--muted)]">
-          <span>{filtered.length} of {rows.length}</span>
           <div className="flex overflow-hidden rounded-md border" style={{ borderColor: "var(--border)" }}>
-            {(["table", "board"] as View[]).map((v) => (
+            {(["picker", "table"] as View[]).map((v) => (
               <button key={v} onClick={() => setView(v)} className="px-2.5 py-1.5 text-[11px] font-medium capitalize transition-colors"
                 style={view === v ? { background: "var(--header)", color: "#fff" } : { color: "var(--muted)" }}>{v}</button>
             ))}
@@ -118,11 +89,13 @@ export default function FifoPage() {
       </div>
 
       <div className="mt-2.5">
-        {view === "board" ? <FifoBoard rows={filtered} /> : <FifoTable rows={filtered} />}
+        {view === "picker"
+          ? <FifoPicker rows={rows} assignRack={assignRack} availOnly={availOnly} />
+          : <FifoTable rows={tableRows} />}
       </div>
 
       <p className="mt-2 text-[10px] text-[var(--muted)]">
-        Aging & FIFO order use the coil-number date (last 6 digits = YYMMDD); “*” means no coil date, receipt date used. Oldest-first per RM (lower # = consume first). Flags: <b style={{ color: "#dc2626" }}>Oldest</b> = #1 for its RM · <b style={{ color: "#ea8a0c" }}>Critical</b> = 30+ days · <b style={{ color: "#15a34a" }}>Ready</b> = rack assigned. Qty available reduces once issues are recorded.
+        Pick a material to see its coils oldest-first; lower number = consume first, green = use next. Tap a rack box (or “+ Add rack”) to set its location (e.g. R1-C1). Aging uses the coil-number date; “*” = no coil date, receipt date used.
       </p>
     </Shell>
   );
