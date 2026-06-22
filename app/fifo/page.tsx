@@ -60,7 +60,7 @@ export default function FifoPage() {
   const tableRows = useMemo(() => availOnly ? rows.filter((r) => r.qty_available > 0) : rows, [rows, availOnly]);
 
   return (
-    <Shell active="/fifo" title="FIFO Board" syncLabel={loading ? "Loading…" : `${kpi.lots} lots`} onRefresh={load} refreshing={loading}>
+    <Shell active="/fifo" title="FIFO Board" subtitle={`${kpi.lots} inbound lots · oldest-first by coil date`} syncLabel={loading ? "Loading…" : `${kpi.lots} lots`} onRefresh={load} refreshing={loading}>
       {error && (
         <div className="mb-3 rounded-lg border px-3 py-2 text-xs" style={{ borderColor: "#dc2626", background: "rgba(220,38,38,0.08)", color: "#dc2626" }}>
           Couldn’t load FIFO data: {error}. Make sure <code>fifo_view.sql</code> has been run.

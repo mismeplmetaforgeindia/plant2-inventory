@@ -72,7 +72,8 @@ export default function GrnPage() {
   }, [rows, search, kind, origin]);
 
   return (
-    <Shell active="/grn" title="GRN Entries" syncLabel={loading ? "Loading…" : `${kpi.total} entries`} onRefresh={load} refreshing={loading}>
+    <Shell active="/grn" title="GRN Entries" subtitle={`${kpi.total} receipts · GRN + Plant 1→2 transfers`} syncLabel={loading ? "Loading…" : `${kpi.total} entries`} onRefresh={load} refreshing={loading}
+      actions={<button onClick={() => setDrawer({ type: "add" })} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white" style={{ background: "var(--navy)" }}>+ New Entry</button>}>
       {error && (
         <div className="mb-3 rounded-lg border px-3 py-2 text-xs" style={{ borderColor: "#dc2626", background: "rgba(220,38,38,0.08)", color: "#dc2626" }}>
           Couldn’t load entries: {error}. Make sure <code>grn_view.sql</code> has been run.
@@ -102,7 +103,6 @@ export default function GrnPage() {
         </select>
         <div className="ml-auto flex items-center gap-2">
           <span className="text-[11px] text-[var(--muted)]">{filtered.length} of {rows.length}</span>
-          <button onClick={() => setDrawer({ type: "add" })} className="rounded-md px-3 py-1.5 text-xs font-semibold text-white" style={{ background: "var(--header)" }}>+ New entry</button>
         </div>
       </div>
 
