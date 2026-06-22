@@ -69,9 +69,9 @@ export default function FifoPage() {
 
       <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
         <Kpi label="Total Lots" value={fmt(kpi.lots)} sub="GRN + transfers" />
-        <Kpi label="Available Stock" value={fmtKg(kpi.avail)} accent="var(--header)" sub="across all lots" />
-        <Kpi label="Critical Aging" value={fmt(kpi.critical)} accent={kpi.critical ? "#dc2626" : undefined} sub="30+ days, still available" />
-        <Kpi label="Pending Rack" value={fmt(kpi.pendingRack)} accent={kpi.pendingRack ? "#ea8a0c" : undefined} sub="not yet assigned" />
+        <Kpi label="Available Stock" value={fmtKg(kpi.avail)} accent="var(--navy)" sub="across all lots" />
+        <Kpi label="Critical Aging" value={fmt(kpi.critical)} accent={kpi.critical ? "#b91c1c" : undefined} sub="30+ days, still available" />
+        <Kpi label="Pending Rack" value={fmt(kpi.pendingRack)} accent={kpi.pendingRack ? "#b45309" : undefined} sub="not yet assigned" />
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">

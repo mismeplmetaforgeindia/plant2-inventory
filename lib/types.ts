@@ -21,11 +21,11 @@ export interface DashboardRow {
 export const STATUS_ORDER: StockStatus[] = ["Zero", "Low", "Safe", "Overstock", "Inactive"];
 
 export const STATUS_META: Record<StockStatus, { label: string; color: string; tint: string }> = {
-  Zero:      { label: "Zero",      color: "#dc2626", tint: "rgba(220,38,38,0.12)" },
-  Low:       { label: "Low",       color: "#ea8a0c", tint: "rgba(234,138,12,0.14)" },
-  Safe:      { label: "Safe",      color: "#15a34a", tint: "rgba(21,163,74,0.12)" },
-  Overstock: { label: "Overstock", color: "#6366f1", tint: "rgba(99,102,241,0.12)" },
-  Inactive:  { label: "Inactive",  color: "#8a97a8", tint: "rgba(138,151,168,0.12)" },
+  Zero:      { label: "Zero",      color: "#b91c1c", tint: "#fee2e2" },
+  Low:       { label: "Low",       color: "#b45309", tint: "#fef3c7" },
+  Safe:      { label: "Safe",      color: "#047857", tint: "#d1fae5" },
+  Overstock: { label: "Overstock", color: "#4338ca", tint: "#e0e7ff" },
+  Inactive:  { label: "Inactive",  color: "#475569", tint: "#f1f5f9" },
 };
 
 // ── FIFO board ───────────────────────────────────────────────────────────────
@@ -53,16 +53,16 @@ export interface FifoRow {
 export const BUCKETS: AgingBucket[] = ["0-7", "8-15", "16-30", "30+"];
 
 export const BUCKET_META: Record<AgingBucket, { label: string; color: string; tint: string }> = {
-  "0-7":   { label: "0–7 days",   color: "#15a34a", tint: "rgba(21,163,74,0.10)" },
-  "8-15":  { label: "8–15 days",  color: "#2e5a8f", tint: "rgba(46,90,143,0.10)" },
-  "16-30": { label: "16–30 days", color: "#ea8a0c", tint: "rgba(234,138,12,0.12)" },
-  "30+":   { label: "30+ days",   color: "#dc2626", tint: "rgba(220,38,38,0.10)" },
+  "0-7":   { label: "0–7 days",   color: "#047857", tint: "#d1fae5" },
+  "8-15":  { label: "8–15 days",  color: "#1e40af", tint: "#dbeafe" },
+  "16-30": { label: "16–30 days", color: "#b45309", tint: "#fef3c7" },
+  "30+":   { label: "30+ days",   color: "#b91c1c", tint: "#fee2e2" },
 };
 
 export function sourceMeta(label: string): { color: string; tint: string } {
-  if (label === "57F4") return { color: "#7c3aed", tint: "rgba(124,58,237,0.12)" };
-  if (label.startsWith("Plant")) return { color: "#0d9488", tint: "rgba(13,148,136,0.12)" };
-  return { color: "#2e5a8f", tint: "rgba(46,90,143,0.12)" }; // GRN
+  if (label === "57F4") return { color: "#6d28d9", tint: "#ede9fe" };
+  if (label.startsWith("Plant")) return { color: "#0f766e", tint: "#ccfbf1" };
+  return { color: "#1e40af", tint: "#dbeafe" }; // GRN
 }
 
 // ── GRN Entries ──────────────────────────────────────────────────────────────

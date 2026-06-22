@@ -44,12 +44,12 @@ export default function InventoryTable({
     <div className="overflow-auto rounded-lg border" style={{ borderColor: "var(--border)", maxHeight: "calc(100vh - 230px)" }}>
       <table className="w-full border-collapse text-xs">
         <thead className="sticky top-0 z-10">
-          <tr style={{ background: "var(--header)" }}>
+          <tr style={{ background: "var(--thead-bg)" }}>
             {COLS.map((c) => (
               <th
                 key={c.key}
                 onClick={() => onSort(c.key)}
-                className={`cursor-pointer select-none whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-white/90 hover:text-white ${c.num ? "text-right" : "text-left"}`}
+                className={`cursor-pointer select-none whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--thead-fg)] hover:text-[var(--navy)] ${c.num ? "text-right" : "text-left"}`}
               >
                 {c.label}
                 {sortKey === c.key && <span className="ml-1">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -57,8 +57,8 @@ export default function InventoryTable({
             ))}
             <th
               onClick={() => onSort("physical_stock")}
-              className="sticky right-0 cursor-pointer select-none whitespace-nowrap px-3 py-2 text-right text-[10px] font-bold uppercase tracking-wider text-white"
-              style={{ background: "var(--header)", borderLeft: "2px solid rgba(255,255,255,0.25)" }}
+              className="sticky right-0 cursor-pointer select-none whitespace-nowrap px-3 py-2 text-right text-[10px] font-bold uppercase tracking-wider text-[var(--text)]"
+              style={{ background: "var(--thead-bg)", borderLeft: "2px solid var(--border)" }}
             >
               Physical Stock{sortKey === "physical_stock" && <span className="ml-1">{sortDir === "asc" ? "▲" : "▼"}</span>}
             </th>

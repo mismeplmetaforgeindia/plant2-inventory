@@ -4,7 +4,7 @@ import { FifoRow, BUCKET_META } from "@/lib/types";
 import { fmt } from "@/lib/stock";
 import SourceBadge from "./SourceBadge";
 
-const PRIO = ["#15a34a", "#ea8a0c", "#fb923c"]; // p1, p2, p3
+const PRIO = ["#10b981", "#fbbf24", "#fb923c"]; // p1, p2, p3
 
 function priColor(p: number) { return PRIO[p - 1] ?? "#94a3b8"; }
 

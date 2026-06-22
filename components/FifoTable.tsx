@@ -16,9 +16,9 @@ export default function FifoTable({ rows }: { rows: FifoRow[] }) {
       <div className="overflow-auto rounded-lg border" style={{ borderColor: "var(--border)", maxHeight: "calc(100vh - 250px)" }}>
         <table className="w-full border-collapse text-xs">
           <thead className="sticky top-0 z-10">
-            <tr style={{ background: "var(--header)" }}>
+            <tr style={{ background: "var(--thead-bg)" }}>
               {["#", "RM Code", "Description", "Source", "Coil / Ref", "Lot Date", "Aging", "Rack", "Recd", "Avail", "Flags"].map((h, i) => (
-                <th key={h} className={`whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-white/90 ${i >= 8 ? "text-right" : "text-left"}`}>{h}</th>
+                <th key={h} className={`whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--thead-fg)] ${i >= 8 ? "text-right" : "text-left"}`}>{h}</th>
               ))}
             </tr>
           </thead>

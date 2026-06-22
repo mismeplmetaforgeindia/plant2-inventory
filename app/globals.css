@@ -5,28 +5,45 @@
 :root {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --bg: #f4f6f9;
+  --bg: #eef1f5;             /* soft cool grey */
   --surface: #ffffff;
-  --surface-2: #f8fafc;
-  --border: #e2e6ec;
-  --text: #16202e;
-  --muted: #6b7686;
-  --header: #1e3a5f;
+  --surface-2: #f8fafc;      /* slate50 */
+  --border: #e2e8f0;         /* slate200 */
+  --border-soft: #f1f5f9;    /* slate100 */
+  --text: #0f172a;           /* slate900 */
+  --muted: #64748b;          /* slate500 */
+  --muted-2: #94a3b8;        /* slate400 */
+  --navy: #1e3a5f;
+  --hover: #f8fafc;
+  --thead-bg: #f8fafc;
+  --thead-fg: #64748b;
+  --active-bg: #eff6ff;      /* selected row tint */
+  --header: #1e3a5f;         /* legacy accent (logo, active chips) */
 }
 .dark {
   --bg: #0d141d;
   --surface: #151f2c;
   --surface-2: #111a26;
   --border: #25303f;
+  --border-soft: #1c2430;
   --text: #e6ecf3;
   --muted: #8a97a8;
+  --muted-2: #64748b;
+  --navy: #5a8fc7;
+  --hover: #1a2533;
+  --thead-bg: #16202e;
+  --thead-fg: #8a97a8;
+  --active-bg: #16263a;
   --header: #1b2c44;
 }
 
 html, body { background: var(--bg); color: var(--text); }
 body { -webkit-font-smoothing: antialiased; }
 
-/* thin industrial scrollbars */
+/* light, subtle table headers everywhere */
+thead th { border-bottom: 1px solid var(--border); }
+tbody tr:hover td { background: var(--hover); }
+
 *::-webkit-scrollbar { width: 9px; height: 9px; }
 *::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }

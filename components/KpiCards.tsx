@@ -21,10 +21,10 @@ export default function KpiCards({ rows }: { rows: DashboardRow[] }) {
   return (
     <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
       <Card label="Raw Materials" value={fmt(total)} />
-      <Card label="Low Stock" value={fmt(low)} accent={low ? "#ea8a0c" : undefined} sub="below reorder point" />
-      <Card label="Zero Stock" value={fmt(zero)} accent={zero ? "#dc2626" : undefined} sub="needs urgent action" />
-      <Card label="Above Max" value={fmt(over)} accent={over ? "#6366f1" : undefined} sub="overstocked" />
-      <Card label="Total Physical Stock" value={fmtKg(totalStock)} accent="var(--header)" sub="across all materials" />
+      <Card label="Low Stock" value={fmt(low)} accent={low ? "#b45309" : undefined} sub="below reorder point" />
+      <Card label="Zero Stock" value={fmt(zero)} accent={zero ? "#b91c1c" : undefined} sub="needs urgent action" />
+      <Card label="Above Max" value={fmt(over)} accent={over ? "#4338ca" : undefined} sub="overstocked" />
+      <Card label="Total Physical Stock" value={fmtKg(totalStock)} accent="var(--navy)" sub="across all materials" />
     </div>
   );
 }

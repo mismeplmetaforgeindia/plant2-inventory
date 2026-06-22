@@ -81,9 +81,9 @@ export default function GrnPage() {
 
       <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
         <Kpi label="Total Entries" value={fmt(kpi.total)} />
-        <Kpi label="Manual Entries" value={fmt(kpi.manual)} accent={kpi.manual ? "#2e5a8f" : undefined} />
-        <Kpi label="Pending Rack" value={fmt(kpi.pending)} accent={kpi.pending ? "#ea8a0c" : undefined} />
-        <Kpi label="Edited" value={fmt(kpi.edited)} accent={kpi.edited ? "#6366f1" : undefined} />
+        <Kpi label="Manual Entries" value={fmt(kpi.manual)} accent={kpi.manual ? "#1e40af" : undefined} />
+        <Kpi label="Pending Rack" value={fmt(kpi.pending)} accent={kpi.pending ? "#b45309" : undefined} />
+        <Kpi label="Edited" value={fmt(kpi.edited)} accent={kpi.edited ? "#4338ca" : undefined} />
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">

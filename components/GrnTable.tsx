@@ -8,7 +8,7 @@ const PAGE = 200;
 
 function StatusPill({ s }: { s: string | null }) {
   const map: Record<string, string> = {
-    "Rack Assigned": "#15a34a", "Pending Rack Assignment": "#ea8a0c", "Edited": "#6366f1", "Depleted": "#8a97a8",
+    "Rack Assigned": "#047857", "Pending Rack Assignment": "#b45309", "Edited": "#4338ca", "Depleted": "#475569",
   };
   const c = map[s ?? ""] ?? "#8a97a8";
   const label = s === "Pending Rack Assignment" ? "Pending" : s ?? "—";
@@ -41,9 +41,9 @@ export default function GrnTable({
       <div className="overflow-auto rounded-lg border" style={{ borderColor: "var(--border)", maxHeight: "calc(100vh - 250px)" }}>
         <table className="w-full border-collapse text-xs">
           <thead className="sticky top-0 z-10">
-            <tr style={{ background: "var(--header)" }}>
+            <tr style={{ background: "var(--thead-bg)" }}>
               {["Date", "RM Code", "Source", "Coil No", "Weight", "Supplier / M-C", "Rack", "Status", "Origin", ""].map((h, i) => (
-                <th key={h} className={`whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-white/90 ${i === 4 ? "text-right" : "text-left"}`}>{h}</th>
+                <th key={h} className={`whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--thead-fg)] ${i === 4 ? "text-right" : "text-left"}`}>{h}</th>
               ))}
             </tr>
           </thead>

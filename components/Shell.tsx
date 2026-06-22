@@ -39,7 +39,7 @@ export default function Shell({
                 href={n.live || isActive ? n.href : undefined}
                 className="rounded-md px-3 py-2 text-sm transition-colors"
                 style={isActive
-                  ? { background: "var(--header)", color: "#fff", fontWeight: 600 }
+                  ? { background: "var(--active-bg)", color: "var(--navy)", fontWeight: 600, boxShadow: "inset 3px 0 0 var(--navy)" }
                   : { color: "var(--muted)", cursor: n.live ? "pointer" : "default" }}
               >
                 {n.label}
